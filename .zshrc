@@ -72,6 +72,7 @@ plugins=(
   git
   colored-man-pages
   sudo
+  gitfast
 )
 
 source $ZSH/oh-my-zsh.sh
