@@ -1,0 +1,4 @@
+rofi.font:	 mononoki 10
+rofi.theme: 	 Adapta-Nokto
+rofi.combi-modi: window,run
+rofi.modi:	 combi
