@@ -32,8 +32,7 @@ font-2 = FontAwesome:size=10;1
 font-3 = Unifont:size=10;0
 
 modules-left = bspwm xwindow
-modules-center = date
-modules-right = volume memory cpu wlan battery battery-2
+modules-right = memory cpu wlan battery battery-2 date
 
 wm-restack = bspwm
 
@@ -59,19 +58,6 @@ label-urgent-padding = 2
 label-empty = •
 label-empty-forground = ${colors.cyan}
 label-empty-padding = 2
-
-[module/volume]
-type = internal/alsa
-speaker-mixer = Speaker
-
-format-volume = <ramp-volume> <label-volume>
-label-muted =   mute 
-label-muted-foreground = ${colors.blue}
-
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
-ramp-volume-3 = 
 
 [module/cpu]
 type = internal/cpu
