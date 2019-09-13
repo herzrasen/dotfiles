@@ -8,7 +8,7 @@ super + shift + f
 
 # program launcher
 super + @space
-	rofi -show run
+	rofi -show combi
 
 # increase brightness
 XF86MonBrightness{Up,Down}
