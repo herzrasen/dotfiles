@@ -73,6 +73,7 @@ plugins=(
   colored-man-pages
   sudo
   gitfast
+  zsh-completions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -94,8 +95,8 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-alias l="lsd -al"
-alias ll="lsd -l"
+alias l="lsd -l"
+alias ll="lsd -al"
 alias lt="lsd --tree"
 
 export XDG_CONFIG_HOME=$HOME/.config
@@ -103,8 +104,12 @@ export XDG_CONFIG_HOME=$HOME/.config
 # dotfile management
 #   first init a bare git repo with:
 #     git init --bare .dotfiles
+#     dot config --local status.showUntrackedFiles no
 alias dot='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # enable zsh-syntax-highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# enable additional completions
+autoload -U compinit && compinit
 
