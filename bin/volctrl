@@ -10,9 +10,6 @@ function notify_volume_change() {
     else 
       exit 1
     fi
-  else 
-    output=$(amixer sset Master toggle)
-    notify_volume_change "$output" "$2"
   fi
 }
 
@@ -42,12 +39,12 @@ cmd=${1,,}
 
 case $cmd in
   up)
-    output=$(amixer sset Master 5%+)
-    notify_volume_change "$output" "up"
+    output=$(amixer sset Master 5%+ unmute)
+    notify_volume_change "$output"
     ;;
   down)
-    output=$(amixer sset Master 5%-)
-    notify_volume_change "$output" "down"
+    output=$(amixer sset Master 5%- unmute)
+    notify_volume_change "$output"
     ;;
   toggle)
     output=$(amixer sset Master toggle)
