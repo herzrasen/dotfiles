@@ -18,7 +18,12 @@ function fullscreen() {
 }
 
 function window() {
-  echo "Capturing window" 
+  $(maim -u -B -i $(xdotool getactivewindow) $image) 
+  if [ "$?" -eq 0]; then
+    dunstify -a screenshot -p -t 5000 -u l -r 700 "Screenshot $image captured"
+  else
+    dunstify -a screenshot -p -t 5000 -u c -r 700 "Unable to capture screenshot"
+  fi
 }
 
 # check the number of arguments
@@ -37,6 +42,7 @@ case $cmd in
     ;;
   window)
     prepare
+    window
     ;;
   *)
     echo "Don't know what to do with: $1"
