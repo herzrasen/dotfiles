@@ -10,17 +10,26 @@ super + shift + f
 super + @space
 	rofi -show combi
 
-# increase brightness
+# screen brightness control
 XF86MonBrightness{Up,Down}
 	xbacklight {-inc,-dec} 5 && \
 	dunstify -a xbacklight -p -t 2000 -u low -r 500 "Backlight set to $(xbacklight | cut -d. -f1)"
 
+# volume control
 XF86AudioMute
 	volctrl toggle
 
 XF86Audio{Raise,Lower}Volume
 	volctrl {up,down}
 
+# screenshot
+Print
+	screenshot window
+
+super + Print
+	screenshot fullscreen
+
+# reload sxhkd
 super + Escape
 	pkill -USR1 -x sxhkd
 

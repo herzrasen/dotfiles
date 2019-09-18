@@ -9,20 +9,20 @@ function prepare() {
 }
 
 function fullscreen() {
-  $(maim $image)
+  $(maim -u -B $image)
   if [ "$?" -eq 0 ]; then
-    dunstify -a screenshot -p -t 5000 -u l -r 700 "Screenshot $image captured"
+    dunstify -a screenshot -p -t 5000 -u l -r 700 "Caputured fullscreen @ $image"
   else
-    dunstify -a screenshot -p -t 5000 -u c -r 700 "Unable to capture screenshot"
+    dunstify -a screenshot -p -t 5000 -u c -r 700 "Unable to capture fullscreen"
   fi
 }
 
 function window() {
   $(maim -u -B -i $(xdotool getactivewindow) $image) 
   if [ "$?" -eq 0]; then
-    dunstify -a screenshot -p -t 5000 -u l -r 700 "Screenshot $image captured"
+    dunstify -a screenshot -p -t 5000 -u l -r 700 "Single window captured @ $image"
   else
-    dunstify -a screenshot -p -t 5000 -u c -r 700 "Unable to capture screenshot"
+    dunstify -a screenshot -p -t 5000 -u c -r 700 "Unable to capture single window"
   fi
 }
 
