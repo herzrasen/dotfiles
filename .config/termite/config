@@ -64,54 +64,6 @@ color13 = #FF92D0
 color14 = #9AEDFE
 color15 = #E6E6E6
 
-# apprentice
-#foreground = #BCBCBC
-#background = #262626
-#color0	   = #1C1C1C
-#color8     = #444444
-#color1     = #AF5F5F
-#color9     = #FF8700
-#color2     = #5F875F
-#color10    = #87AF87
-#color3     = #87875F
-#color11    = #FFFFAF
-#color4     = #5F87AF
-#color12    = #8FAFD7
-#color5     = #5F5F87
-#color13    = #8787AF
-#color6     = #5F8787
-#color14    = #5FAFAF
-#color7     = #6C6C6C
-#color15 = #FFFFFF
-
-# gruvbox
-#foreground = #ebdbb2
-# black + grey
-#color0 =  #282828
-#color8 =  #928374
-# dark red + red
-#color1 =  #cc241d
-#color9 =  #fb4934
-# dark green + green
-#color2 =  #98971a
-#color10 = #b8bb26
-# dark yellow + yellow
-#color3 =  #d79921
-#color11 = #fabd2f
-# dark blue + blue
-#color4 =  #458588
-#color12 = #83a598
-# dark magenta + magenta
-#color5 =  #b16286
-#color13 = #d3869b
-# dark cyan + cyan
-#color6 =  #689d6a
-#color14 = #8ec07c
-# light grey + white
-#color7 =  #a89984
-#color15 = #ebdbb2
-#background = rgba(28, 28, 28, 0.75)
-
 [hints]
 #font = Monospace 12
 #active_foreground = #e68080

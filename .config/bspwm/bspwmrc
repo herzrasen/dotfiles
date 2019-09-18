@@ -18,12 +18,16 @@ bspc rule -a lightdm-settings state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 
+# use the cursor defined in .Xresources
+xsetroot -cursor_name left_ptr
+
 # start polybar
 killall -w polybar
 polybar primary &
 
 # set the wallpaper
-feh --bg-scale /home/dennis/Pictures/spaceman.jpg
+#feh --bg-scale /home/dennis/Pictures/spaceman.jpg
+nitrogen --restore
 
 # start compton
 killall -w compton
