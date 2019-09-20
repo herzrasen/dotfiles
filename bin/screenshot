@@ -19,7 +19,7 @@ function fullscreen() {
 
 function window() {
   $(maim -u -B -i $(xdotool getactivewindow) $image) 
-  if [ "$?" -eq 0]; then
+  if [ "$?" -eq 0 ]; then
     dunstify -a screenshot -p -t 5000 -u l -r 700 "Single window captured @ $image"
   else
     dunstify -a screenshot -p -t 5000 -u c -r 700 "Unable to capture single window"
