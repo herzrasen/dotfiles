@@ -98,6 +98,7 @@ source $ZSH/oh-my-zsh.sh
 alias l="lsd -l"
 alias ll="lsd -al"
 alias lt="lsd --tree"
+alias tree="lt"
 
 export XDG_CONFIG_HOME=$HOME/.config
 
