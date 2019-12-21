@@ -29,9 +29,9 @@ polybar primary &
 #feh --bg-scale /home/dennis/Pictures/spaceman.jpg
 nitrogen --restore
 
-# start compton
-killall -w compton
-compton -b
+# start picom
+killall -w picom
+picom -b
 
 # start dunst
 killall -w dunst
