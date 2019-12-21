@@ -11,9 +11,9 @@ Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'cespare/vim-toml'
-Plug 'neomake/neomake', { 'for': ['rust'] }
-Plug 'w0rp/ale'
+Plug 'neomake/neomake'
 Plug 'junegunn/fzf.vim'
+" Plug 'jremmen/vim-ripgrep'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'dracula/vim'
@@ -128,8 +128,8 @@ nnoremap <left> <nop>
 nnoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+" inoremap <left> <nop>
+" inoremap <right> <nop>
 
 " fast reloading of nvim config
 map <leader>e :e! ~/.config/nvim/init.vim<cr>
@@ -180,8 +180,20 @@ let g:rustfmt_autosave = 1
 
 " racer
 set hidden
-" let g:racer_cmd = "/home/dennis/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
 let g:racer_insert_paren = 1
 au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gx <Plug>(rust-doc)
+
+" neomake
+call neomake#configure#automake('nw', 0)
+let g:neomake_rust_enabled_makers = ['cargo']
+
+" fzf
+let $FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+nnoremap <C-o> :Files<cr>
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+nnoremap <C-S-f> :Rg<cr>
