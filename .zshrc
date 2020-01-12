@@ -36,7 +36,9 @@ alias lt="lsd --tree"
 alias tree="lt"
 
 export XDG_CONFIG_HOME=$HOME/.config
-export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src/
+if [[ -x $(command -v rustc) ]]; then
+    export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src/
+fi
 
 # dotfile management
 #   first init a bare git repo with:
