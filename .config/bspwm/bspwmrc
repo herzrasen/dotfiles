@@ -1,8 +1,18 @@
 #! /bin/sh
 
-sxhkd &
+function num_monitors() {
+    xrandr --query | grep -w "connected" | wc -l
+}
 
-bspc monitor -d I II III IV V VI VII VIII
+function primary_monitor() {
+    xrandr --query | grep -w "primary\|connected" | cut -d ' ' -f 1
+} 
+
+function secondary_monitor() {
+    xrandr --query | grep -w "connected" | grep -v "primary" | cut -d ' ' -f 1
+}
+
+sxhkd &
 
 bspc config border_width         	1
 bspc config window_gap          	5
@@ -12,21 +22,26 @@ bspc config borderless_monocle   	true
 bspc config gapless_monocle      	true
 bspc config focus_follows_pointer       true
 
-bspc rule -a Gimp desktop='^8' state=floating follow=on
-bspc rule -a Brave-browser desktop='^2'
-bspc rule -a lightdm-settings state=floating
-bspc rule -a Kupfer.py focus=on
-bspc rule -a Screenkey manage=off
+bspc rule -a firefox desktop='^2'
 
 # use the cursor defined in .Xresources
 xsetroot -cursor_name left_ptr
 
 # start polybar
 killall -w polybar
-polybar primary &
+if [[ `num_monitors` -eq "1" ]]; then
+    bspc monitor -d 1 2 3 4 5 6 7 8
+    polybar primary &
+elif [[ `num_monitors` -eq "2" ]]; then
+    primary=$(primary_monitor)
+    secondary=$(secondary_monitor)
+    bspc monitor %$primary -n "$primary" -d 1 2 3 4 5
+    MONITOR=$primary polybar primary &
+    bspc monitor %secondary -n "$secondary" -d 6 7 8 9 10
+    MONITOR=$secondary polybar secondary &
+fi
 
 # set the wallpaper
-#feh --bg-scale /home/dennis/Pictures/spaceman.jpg
 nitrogen --restore
 
 # start picom
