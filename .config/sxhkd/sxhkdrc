@@ -1,6 +1,6 @@
 # terminal emulator
 super + Return
-	termite
+	alacritty
 
 # browser 
 super + shift + f
