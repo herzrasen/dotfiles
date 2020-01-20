@@ -22,8 +22,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-"Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'lifepillar/pgsql.vim'
+Plug 'GEverding/vim-hocon'
 Plug 'janko/vim-test'
 Plug 'dracula/vim'
 Plug 'jaredgorski/spacecamp'
@@ -305,6 +305,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-reference)
+
+" formatting
+nnoremap <silent> F :call CocAction('format')<CR>
 
 " use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
