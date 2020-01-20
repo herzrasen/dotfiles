@@ -22,12 +22,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+"Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'lifepillar/pgsql.vim'
 Plug 'janko/vim-test'
 Plug 'dracula/vim'
 Plug 'jaredgorski/spacecamp'
 Plug 'morhetz/gruvbox'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 " disable mouse
@@ -39,7 +40,7 @@ set history=500
 " enable 256 colors
 set t_Co=256
 "colorscheme spacecamp_lite
-colorscheme gruvbox
+colorscheme onedark
 
 " enable utf-8 as default
 set encoding=utf-8
@@ -69,8 +70,8 @@ let mapleader="\<space>"
 " fast saving
 nmap <leader>w :w!<cr>
 
-" set 7 lines cursor offset
-set so=7
+" set 3 lines cursor offset
+set so=3
 
 :set number relativenumber
 
@@ -93,7 +94,7 @@ set cursorline
 set cmdheight=3
 
 " better support for diagnostic messages
-set updatetime=100
+set updatetime=1000
 
 " ignore case when searching
 set ignorecase
@@ -156,6 +157,11 @@ nnoremap <down> <nop>
 nnoremap <left> <nop>
 nnoremap <right> <nop>
 
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
 " window movement
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -193,7 +199,7 @@ let g:startify_lists = [
 
 " lightline
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'onedark',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -226,12 +232,12 @@ nmap <C-b> :NERDTreeToggle<cr>
 " rust
 let g:rustfmt_autosave = 1
 
-" racer
-set hidden
-let g:racer_experimental_completer = 1
-let g:racer_insert_paren = 1
-au FileType rust nmap <leader>d <Plug>(rust-def)
-au FileType rust nmap <leader>h <Plug>(rust-doc)
+"" racer
+"set hidden
+"let g:racer_experimental_completer = 1
+"let g:racer_insert_paren = 1
+"au FileType rust nmap <leader>d <Plug>(rust-def)
+"au FileType rust nmap <leader>h <Plug>(rust-doc)
 
 " neomake
 call neomake#configure#automake('nw', 0)
@@ -268,6 +274,8 @@ set shortmess+=c
 
 " always show signcolumns
 set signcolumn=yes
+
+set hidden
 
 " use tab for trigger completion with characters ahead and navigate
 inoremap <silent><expr> <TAB>
@@ -311,6 +319,39 @@ endfunction
 
 " rename current word
 nmap <leader>rn <Plug>(coc-rename)
+
+" float scroll
+function! FloatScroll(forward) abort
+  let float = coc#util#get_float()
+  if !float | return '' | endif
+  let buf = nvim_win_get_buf(float)
+  let buf_height = nvim_buf_line_count(buf)
+  let win_height = nvim_win_get_height(float)
+  if buf_height < win_height | return '' | endif
+  let pos = nvim_win_get_cursor(float)
+  if a:forward
+    if pos[0] == 1
+      let pos[0] += 3 * win_height / 4
+    elseif pos[0] + win_height / 2 + 1 < buf_height
+      let pos[0] += win_height / 2 + 1
+    else
+      let pos[0] = buf_height
+    endif
+  else
+    if pos[0] == buf_height
+      let pos[0] -= 3 * win_height / 4
+    elseif pos[0] - win_height / 2 + 1  > 1
+      let pos[0] -= win_height / 2 + 1
+    else
+      let pos[0] = 1
+    endif
+  endif
+  call nvim_win_set_cursor(float, pos)
+  return ''
+endfunction
+
+inoremap <silent><expr> <down> coc#util#has_float() ? FloatScroll(1) : "\<down>"
+inoremap <silent><expr>  <up>  coc#util#has_float() ? FloatScroll(0) :  "\<up>"
 
 " vim-test
 nmap <silent> <leader>tn :TestNearest<CR>
