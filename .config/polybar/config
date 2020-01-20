@@ -37,6 +37,8 @@ modules-right = memory cpu wlan battery battery-2 date
 
 wm-restack = bspwm
 
+tray-position = right
+
 [bar/secondary]
 monitor = ${env:MONITOR}
 width = 100%
@@ -71,18 +73,19 @@ label = %title:0:30:...%
 
 [module/bspwm]
 type = internal/bspwm
+pin-workspaces = true
 
 format = <label-state> <label-mode>
 
-label-focused = %index%
+label-focused = %name%
 label-focused-background = ${colors.grey}
 label-focused-underline= ${colors.yellow}
 label-focused-padding = 2
 
-label-occupied = %index%
+label-occupied = %name%
 label-occupied-padding = 2
 
-label-urgent = %index%!
+label-urgent = %name%
 label-urgent-background = ${colors.red}
 label-urgent-padding = 2
 
