@@ -21,7 +21,8 @@ Plug 'neomake/neomake'
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'rust-lang/rust.vim' 
+Plug 'racer-rust/vim-racer'
 Plug 'lifepillar/pgsql.vim'
 Plug 'GEverding/vim-hocon'
 Plug 'janko/vim-test'
@@ -124,8 +125,8 @@ set expandtab
 set smarttab
 
 " 4 spaces
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 
 " auto indent
 set ai
@@ -165,6 +166,9 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
+
+" jump to end of line in insert mode
+inoremap <C-e> <C-o>$
 
 " fast reloading of nvim config
 map <leader>e :e! ~/.config/nvim/init.vim<cr>
