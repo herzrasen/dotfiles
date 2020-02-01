@@ -27,7 +27,6 @@ Plug 'lifepillar/pgsql.vim'
 Plug 'GEverding/vim-hocon'
 Plug 'janko/vim-test'
 Plug 'dracula/vim'
-Plug 'jaredgorski/spacecamp'
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
 call plug#end()
@@ -40,8 +39,7 @@ set history=500
 
 " enable 256 colors
 set t_Co=256
-"colorscheme spacecamp_lite
-colorscheme onedark
+colorscheme dracula
 
 " enable utf-8 as default
 set encoding=utf-8
@@ -360,11 +358,16 @@ endfunction
 inoremap <silent><expr> <down> coc#util#has_float() ? FloatScroll(1) : "\<down>"
 inoremap <silent><expr>  <up>  coc#util#has_float() ? FloatScroll(0) :  "\<up>"
 
+nnoremap <silent> ,d :<C-u>CocList diagnostics<cr>
+nnoremap <silent> ,o :<C-u>CocList outline<cr>
+
 " vim-test
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>ta :TestFile<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
+" scala
+au BufRead,BufNewFile *.sbt set filetype=scala
 
 " mix-format
 let g:mix_format_on_save = 1
