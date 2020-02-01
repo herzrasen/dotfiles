@@ -35,6 +35,13 @@ alias ll="lsd -al"
 alias lt="lsd --tree"
 alias tree="lt"
 
+# xbps aliases 
+alias xi="xbps-install"
+alias xq="xbps-query"
+alias xr="xbps-remove"
+
+alias sudo='sudo '
+
 export XDG_CONFIG_HOME=$HOME/.config
 if [[ -x $(command -v rustc) ]]; then
     export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src/
