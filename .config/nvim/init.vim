@@ -18,6 +18,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'cespare/vim-toml'
 Plug 'mrk21/yaml-vim'
 Plug 'neomake/neomake'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'

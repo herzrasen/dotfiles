@@ -59,3 +59,5 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # enable additional completions
 autoload -U compinit && compinit
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

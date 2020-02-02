@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 function num_monitors() {
     xrandr --query | grep -w "connected" | wc -l
@@ -12,8 +12,6 @@ function secondary_monitor() {
     xrandr --query | grep -w "connected" | grep -v "primary" | cut -d ' ' -f 1
 }
 
-sxhkd &
-
 bspc config border_width         	1
 bspc config window_gap          	5
 
@@ -26,13 +24,14 @@ bspc config remove_unplugged_monitors   true
 bspc rule -a firefox desktop='^2'
 
 # use the cursor defined in .Xresources
-xsetroot -cursor_name left_ptr
+xsetroot -cursor_name left_ptr &
 
 # start polybar
 killall -w polybar
 if [[ `num_monitors` -eq "1" ]]; then
-    bspc monitor -d 1 2 3 4 5 6 7 8
-    polybar primary &
+    primary=$(primary)
+    bspc monitor %$primary -n "$primary" -d 1 2 3 4 5 6 7 8
+    MONITOR=$primary polybar primary &
 elif [[ `num_monitors` -eq "2" ]]; then
     primary=$(primary_monitor)
     secondary=$(secondary_monitor)
@@ -43,15 +42,15 @@ elif [[ `num_monitors` -eq "2" ]]; then
 fi
 
 # set the wallpaper
-nitrogen --restore
+nitrogen --restore &
 
 # start picom
 killall -w picom
-picom -b
+picom -b &
 
 # start dunst
 killall -w dunst
-dunst
+dunst &
 
 # nm-applet
 if [[ -x $(command -v nm-applet) ]]; then
