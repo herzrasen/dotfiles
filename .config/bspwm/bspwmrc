@@ -29,7 +29,7 @@ xsetroot -cursor_name left_ptr &
 # start polybar
 killall -w polybar
 if [[ `num_monitors` -eq "1" ]]; then
-    primary=$(primary)
+    primary=$(primary_monitor)
     bspc monitor %$primary -n "$primary" -d 1 2 3 4 5 6 7 8
     MONITOR=$primary polybar primary &
 elif [[ `num_monitors` -eq "2" ]]; then
