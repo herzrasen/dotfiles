@@ -30,6 +30,7 @@ Plug 'janko/vim-test'
 Plug 'dracula/vim'
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
+Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
 " disable mouse
@@ -39,8 +40,10 @@ set mouse-=a
 set history=500
 
 " enable 256 colors
-set t_Co=256
-colorscheme dracula
+set termguicolors
+let ayucolor="mirage"
+colorscheme ayu
+
 
 " enable utf-8 as default
 set encoding=utf-8
