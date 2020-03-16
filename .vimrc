@@ -11,6 +11,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'plasticboy/vim-markdown'
@@ -86,7 +87,7 @@ set cursorline
 set cmdheight=3
 
 " better support for diagnostic messages
-set updatetime=1000
+" set updatetime=1000
 
 " ignore case when searching
 set ignorecase
@@ -132,4 +133,195 @@ set laststatus=2
 " permanent undo
 set undodir=~/.vim/undo
 set undofile
+
+" move a line using alt+[jk]
+nnoremap <leader>j mz:m+<cr>`z
+nnoremap <leader>k mz:m-2<cr>`z
+
+" no arrow keys
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" jump to the end of the line
+inoremap <C-e> <C-o>$
+
+" fast reloading of vimrc
+au BufWritePost ~/.vimrc source ~/.vimrc
+
+" edit vimrc
+map <leader>e :e! ~/.vimrc<cr>
+
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+au BufRead,BufNewFile todo*     set filetype=todo
+au BufRead,BufNewFile *.txt     set filetype=todo
+au BufRead *.md set filetype=markdown
+
+""" startify
+let g:startify_custom_header = startify#center([])
+let g:startify_session_dir = '~/.vim/session'
+let g:startify_session_persistence = 1
+let g:startify_lists = [
+    \ { 'type': 'sessions',  'header': ['   Sessions']       },
+    \ { 'type': 'files',     'header': ['   MRU']            },
+    \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ ]
+
+""" lightline
+let g:lightline = {
+      \ 'colorscheme': 'onedark',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+
+""" nerdtree
+let g:NERDTreeWinPos = "right"
+let NERDTreeShowHidden = 1
+let g:NERDTreeWinSize = 35
+nmap <leader>x :NERDTreeToggle<cr>
+
+""" rust
+let g:rustfmt_autosave = 1
+
+""" neomake
+call neomake#configure#automake('nw', 0)
+let g:neomake_rust_enabled_makers = ['cargo']
+let g:neomake_logfile = '/tmp/neomake.log'
+let g:neomake_open_list = 2
+
+""" fzf
+let $FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+nnoremap <leader>o :Files<cr>
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \    'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \ fzf#vim#with_preview(), <bang>0)
+nnoremap <leader>f :Rg<cr>
+nnoremap <leader>b :Buffers<cr>
+
+""" coc
+" don't give ins-completion-menu messages
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+set hidden
+
+" use tab for trigger completion with characters ahead and navigate
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-n>"
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1] =~ '\s'
+endfunction
+
+" Use <C-space> to trigger completion
+inoremap <silent><expr> <C-space> coc#refresh()
+
+" Use <cr> to confirm completion, '<C-g>u' means break undo chain at current
+" position.
+" Coc only does snippet and additional edit on confirm.
+" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<cr>"
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-reference)
+
+" formatting
+nnoremap <silent> F :call CocAction('format')<CR>
+
+" use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
+
+" rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+nnoremap <silent> ,d :<C-u>CocList diagnostics<cr>
+nnoremap <silent> ,o :<C-u>CocList outline<cr>
+
+function! Find_cursor_popup(...)
+  let radius = get(a:000, 0, 2)
+  let srow = screenrow()
+  let scol = screencol()
+
+" it's necessary to test entire rect, as some popup might be quite small
+  for r in range(srow - radius, srow + radius)
+    for c in range(scol - radius, scol + radius)
+      let winid = popup_locate(r, c)
+      if winid != 0
+        return winid
+      endif
+    endfor
+  endfor
+
+  return 0
+endfunction
+
+function! Scroll_cursor_popup(down)
+  let winid = Find_cursor_popup()
+  if winid == 0
+    return 0
+  endif
+
+  let pp = popup_getpos(winid)
+  call popup_setoptions( winid,
+        \ {'firstline' : pp.firstline + ( a:down ? 1 : -1 ) } )
+
+  return 1
+endfunction
+
+inoremap <silent><expr> <down> Scroll_cursor_popup(1) ? '<esc>' : '<down>'
+inoremap <silent><expr> <up> Scroll_cursor_popup(0) ? '<esc>' : '<up>'
+nnoremap <expr> <c-d> Scroll_cursor_popup(1) ? '<esc>' : '<c-d>'
+nnoremap <expr> <c-u> Scroll_cursor_popup(0) ? '<esc>' : '<c-u>'
+
+" vim-test
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>ta :TestFile<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+" scala
+au BufRead,BufNewFile *.sbt set filetype=scala
+
+" mix-format
+let g:mix_format_on_save = 1
+
 
