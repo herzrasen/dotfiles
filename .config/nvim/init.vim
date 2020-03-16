@@ -11,22 +11,23 @@ Plug 'majutsushi/tagbar'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
-Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'plasticboy/vim-markdown'
 Plug 'cespare/vim-toml'
 Plug 'mrk21/yaml-vim'
+Plug 'GEverding/vim-hocon'
+Plug 'janko/vim-test'
 Plug 'neomake/neomake'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'mikelue/vim-maven-plugin'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'rust-lang/rust.vim' 
 Plug 'racer-rust/vim-racer'
 Plug 'lifepillar/pgsql.vim'
-Plug 'GEverding/vim-hocon'
-Plug 'janko/vim-test'
+Plug 'hashivim/vim-terraform'
 Plug 'dracula/vim'
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
@@ -36,6 +37,9 @@ call plug#end()
 " disable mouse
 set mouse-=a
 
+" enable global clipboard
+set clipboard=unnamedplus
+
 " how many lines of history to remember
 set history=500
 
@@ -43,7 +47,6 @@ set history=500
 set termguicolors
 let ayucolor="mirage"
 colorscheme ayu
-
 
 " enable utf-8 as default
 set encoding=utf-8
@@ -67,7 +70,6 @@ set splitright
 set wildmenu
 
 " set the map leader
-"let mapleader=","
 let mapleader="\<space>"
 
 " fast saving
@@ -128,7 +130,7 @@ set expandtab
 " be smart with tabs
 set smarttab
 
-" 4 spaces
+" 2 spaces
 set shiftwidth=2
 set tabstop=2
 
@@ -185,14 +187,7 @@ au BufRead,BufNewFile *.txt	set filetype=todo
 au BufRead *.md set filetype=markdown
 
 " startify
-let g:startify_custom_header = startify#center([
-    \ '____    ____  __  .___  ___.', 
-    \ '\   \  /   / |  | |   \/   |', 
-    \ ' \   \/   /  |  | |  \  /  |', 
-    \ '  \      /   |  | |  |\/|  |', 
-    \ '   \    /    |  | |  |  |  |', 
-    \ '    \__/     |__| |__|  |__|', 
-    \ ]) 
+let g:startify_custom_header = startify#center([]) 
 
 let g:startify_session_dir = '~/.vim/session'
 let g:startify_session_persistence = 1
@@ -223,9 +218,6 @@ let g:ale_set_highlights = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 
-" auto-pairs
-let g:AutoPairs = {'(':')', '[':']', '{':'}', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
-
 " gitgutter
 let g:gitgutter_log = 1  
 
@@ -233,7 +225,7 @@ let g:gitgutter_log = 1
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden = 1
 let g:NERDTreeWinSize = 30
-nmap <C-b> :NERDTreeToggle<cr>
+nmap <leader>x :NERDTreeToggle<cr>
 
 " rust
 let g:rustfmt_autosave = 1
@@ -370,8 +362,17 @@ nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>ta :TestFile<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
+
+if has('nvim')
+  tmap <C-o> <C-\><C-n>
+endif
+
 " scala
 au BufRead,BufNewFile *.sbt set filetype=scala
 
 " mix-format
 let g:mix_format_on_save = 1
+
+" terraform
+let g:terraform_align = 1
+let g:terraform_fmt_on_save = 1

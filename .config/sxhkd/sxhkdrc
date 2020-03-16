@@ -6,14 +6,17 @@ super + Return
 super + shift + f
 	firefox --new-tab about:home
 
+super + Pause
+  betterlockscreen --lock blur
+
 # program launcher
 super + @space
 	rofi -show combi
 
 # screen brightness control
 XF86MonBrightness{Up,Down}
-	xbacklight {-inc,-dec} 5 && \
-	dunstify -a xbacklight -p -t 2000 -u low -r 500 "Backlight set to $(xbacklight | cut -d. -f1)"
+  brightnessctl set {+5%,5%-} && \
+  dunstify -a backlight -p -t 2000 -u low -r 500 "Backlight set to $(brightnessctl | grep -i 'current brightness' | cut -d'(' -f2 | cut -d')' -f1)"
 
 # volume control
 XF86AudioMute
