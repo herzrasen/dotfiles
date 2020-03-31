@@ -23,7 +23,9 @@ Plug 'neomake/neomake'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'rust-lang/rust.vim'
+Plug 'derekwyatt/vim-scala'
 Plug 'ayu-theme/ayu-vim'
+Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
 " set leader key
@@ -37,8 +39,10 @@ set history=500
 
 " colors
 set termguicolors
-let ayucolors="mirage"
-colorscheme ayu
+"set t_Co=256
+" let ayucolors="mirage"
+set background=dark
+colorscheme nord
 
 " enable utf-8 as default
 set encoding=utf-8
@@ -183,7 +187,7 @@ let g:startify_lists = [
 
 """ lightline
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -304,7 +308,6 @@ function! Scroll_cursor_popup(down)
   let pp = popup_getpos(winid)
   call popup_setoptions( winid,
         \ {'firstline' : pp.firstline + ( a:down ? 1 : -1 ) } )
-
   return 1
 endfunction
 
@@ -312,6 +315,15 @@ inoremap <silent><expr> <down> Scroll_cursor_popup(1) ? '<esc>' : '<down>'
 inoremap <silent><expr> <up> Scroll_cursor_popup(0) ? '<esc>' : '<up>'
 nnoremap <expr> <c-d> Scroll_cursor_popup(1) ? '<esc>' : '<c-d>'
 nnoremap <expr> <c-u> Scroll_cursor_popup(0) ? '<esc>' : '<c-u>'
+
+" Toggle panel with Tree Views
+nnoremap <silent> <leader>t :<C-u>CocCommand metals.tvp<CR>
+" Toggle Tree View 'metalsBuild'
+nnoremap <silent> <leader>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+" Toggle Tree View 'metalsCompile'
+nnoremap <silent> <leader>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+" Reveal current current class (trait or object) in Tree View 'metalsBuild'
+nnoremap <silent> <leader>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
 
 " vim-test
 nmap <silent> <leader>tn :TestNearest<CR>
