@@ -41,19 +41,16 @@ elif [[ `num_monitors` -eq "2" ]]; then
     MONITOR=$secondary polybar secondary &
 fi
 
+sxhkd &
+
 # set the wallpaper
 nitrogen --restore &
 
-# start picom
-killall -w picom
-picom -b &
+# start compton
+killall -w compton
+compton --config ~/.config/compton/compton.conf -b &
 
 # start dunst
 killall -w dunst
 dunst &
 
-# nm-applet
-if [[ -x $(command -v nm-applet) ]]; then
-    killall nm-applet
-    nm-applet & 
-fi

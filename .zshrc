@@ -54,7 +54,7 @@ fi
 alias dot='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # enable zsh-syntax-highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # enable additional completions
 autoload -U compinit && compinit
