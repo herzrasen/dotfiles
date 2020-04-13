@@ -1,63 +1,99 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=/usr/local/bin:$HOME/.cargo/bin:$PATH
+# enable colors
+autoload -U colors && colors
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/dennis/.oh-my-zsh"
+# prompt
+NEWLINE=$'\n'
+PROMPT="%B%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$reset_color%}${NEWLINE}$%b "
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="gnzh"
+# show git info on the right side
+local return_code="%(?..%F{red}%? ↵%f)"
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=${return_code}
+# cd when only a path is given
+setopt autocd
 
-# Update zsh each x days
-export UPDATE_ZSH_DAYS=5
+# case insensitive globbing
+setopt no_case_glob
 
-# Which plugins would you like to load?
-plugins=(
-  git
-  colored-man-pages
-  fzf
-  sudo
-)
+# histor settings
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.cache/zsh/history
+# share history across multiple sessions
+setopt share_history
+# persist commands to history after every command
+setopt inc_append_history
+# remove blank lines from history
+setopt hist_reduce_blanks
 
-source $ZSH/oh-my-zsh.sh
+# correction
+setopt correct
+setopt correct_all
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
+# completion
+autoload -U compinit 
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-suffixes
+zstyle ':completion:*' expand prefix suffix
+compinit
+_comp_options+=(globdots)
 
-alias l="lsd -l"
-alias ll="lsd -al"
-alias lt="lsd --tree"
-alias tree="lt"
+# vi mode
+bindkey -v
 
-# xbps aliases 
-alias xi="xbps-install"
-alias xq="xbps-query"
-alias xr="xbps-remove"
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER == sudo\ * ]]; then
+        LBUFFER="${LBUFFER#sudo }"
+    elif [[ $BUFFER == $EDITOR\ * ]]; then
+        LBUFFER="${LBUFFER#$EDITOR }"
+        LBUFFER="sudoedit $LBUFFER"
+    elif [[ $BUFFER == sudoedit\ * ]]; then
+        LBUFFER="${LBUFFER#sudoedit }"
+        LBUFFER="$EDITOR $LBUFFER"
+    else
+        LBUFFER="sudo $LBUFFER"
+    fi
+}
+zle -N sudo-command-line
+# Defined shortcut keys: [Esc] [Esc]
+bindkey -M vicmd '\e\e' sudo-command-line
+bindkey -M viins '\e\e' sudo-command-line
 
-alias sudo='sudo '
+# indicate vi mode with cursor shape
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+    [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+    [[ ${KEYMAP} == viins ]] || 
+    [[ ${KEYMAP} = '' ]] ||
+    [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
+}
+zle -N zle-keymap-select
+# initialize the vi mode correctly
+zle-line-init() {
+  zle -K viins
+  echo -ne '\e[5 q'
+}
+zle -N zle-line-init
 
-export XDG_CONFIG_HOME=$HOME/.config
-if [[ -x $(command -v rustc) ]]; then
-    export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src/
-fi
+preexec() {
+  echo -ne '\e[5 q'
+}
 
-# dotfile management
-#   first init a bare git repo with:
-#     git init --bare .dotfiles
-#     dot config --local status.showUntrackedFiles no
-alias dot='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# load functions
+source ~/.config/zsh/functions/*.zsh
 
-# enable zsh-syntax-highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# load aliases
+source ~/.config/zsh/aliases/*.zsh
 
-# enable additional completions
-autoload -U compinit && compinit
+# load zsh-syntax-highlighting
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+ [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

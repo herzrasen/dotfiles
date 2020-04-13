@@ -1,10 +1,10 @@
 # terminal emulator
 super + Return
-	termite
+	kitty
 
 # browser 
-super + shift + f
-	firefox --new-tab about:home
+super + shift + b
+	vivaldi vivaldi:startpage
 
 super + Pause
   betterlockscreen --lock blur

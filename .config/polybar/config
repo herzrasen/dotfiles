@@ -27,11 +27,10 @@ padding-right = 0
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = Anonymous Pro:size=9;1
-font-1 = mononoki:size=9;1
-font-2 = FiraCode:size=9;1
-font-3 = MaterialIcons:size=9;1
-font-4 = FontAwesome:size=9;1
+font-0 = mononoki:size=9;1
+font-1 = FiraCode:size=9;1
+font-2 = MaterialIcons:size=11;2
+font-3 = FontAwesome:size=9;1
 
 modules-left = bspwm xwindow
 modules-right = memory cpu wlan battery battery-2 date
@@ -58,11 +57,10 @@ padding-right = 0
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = Anonymous Pro:size=9;1
-font-1 = mononoki:size=9;1
-font-2 = FiraCode:size=9;1
-font-3 = MaterialIcons:size=9;1
-font-4 = FontAwesome:size=9;1
+font-0 = mononoki:size=9;1
+font-1 = FiraCode:size=9;1
+font-2 = MaterialIcons:size=9;1
+font-3 = FontAwesome:size=9;1
 
 modules-left = bspwm xwindow
 modules-right = date

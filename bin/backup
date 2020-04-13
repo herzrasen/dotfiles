@@ -1,0 +1,41 @@
+#!/bin/bash
+
+echo "Backing up files"
+
+rsync \
+  --recursive \
+  --copy-links \
+  --perms \
+  --times \
+  --group \
+  --owner \
+  --delete \
+  --progress \
+  --exclude='/.config/vivaldi' \
+  --exclude='/.mozilla' \
+  --exclude='.git/' \
+  --exclude='/.cache' \
+  --exclude='/.sbt' \
+  --exclude='*.o' \
+  --exclude='*.class' \
+  --exclude='/.vim' \
+  --exclude='/.config/coc' \
+  --exclude='/.config/nvim/plugged' \
+  --exclude='/.gnupg' \
+  --exclude='/.yadm' \
+  --exclude='/.xsession-errors' \
+  --exclude='/.local/share/nvim' \
+  --exclude='/.cargo' \
+  --exclude='/.ivy2' \
+  --exclude='/.m2' \
+  --log-file='/tmp/rsync.log' \
+  /home/dennis/ \
+  dennis@keeper:backup/nightowl
+
+if [ $? -ne 0 ]; then
+  echo "Failed backing up"
+else
+  echo "Job completed successfully"
+fi
+
+
