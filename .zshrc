@@ -1,11 +1,17 @@
 # enable colors
 autoload -U colors && colors
 
+# prompt
 NEWLINE=$'\n'
 PROMPT="%B%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$reset_color%}${NEWLINE}$%b "
 
+# show git info on the right side
 local return_code="%(?..%F{red}%? ↵%f)"
-RPROMPT="${return_code}"
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=${return_code}
 # cd when only a path is given
 setopt autocd
 
@@ -38,6 +44,25 @@ _comp_options+=(globdots)
 # vi mode
 bindkey -v
 
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER == sudo\ * ]]; then
+        LBUFFER="${LBUFFER#sudo }"
+    elif [[ $BUFFER == $EDITOR\ * ]]; then
+        LBUFFER="${LBUFFER#$EDITOR }"
+        LBUFFER="sudoedit $LBUFFER"
+    elif [[ $BUFFER == sudoedit\ * ]]; then
+        LBUFFER="${LBUFFER#sudoedit }"
+        LBUFFER="$EDITOR $LBUFFER"
+    else
+        LBUFFER="sudo $LBUFFER"
+    fi
+}
+zle -N sudo-command-line
+# Defined shortcut keys: [Esc] [Esc]
+bindkey -M vicmd '\e\e' sudo-command-line
+bindkey -M viins '\e\e' sudo-command-line
+
 # indicate vi mode with cursor shape
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
@@ -62,9 +87,6 @@ preexec() {
   echo -ne '\e[5 q'
 }
 
-autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
-
 # load functions
 source ~/.config/zsh/functions/*.zsh
 
@@ -74,3 +96,4 @@ source ~/.config/zsh/aliases/*.zsh
 # load zsh-syntax-highlighting
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+ [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
