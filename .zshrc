@@ -38,8 +38,19 @@ autoload -U compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
+zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
+setopt complete_aliases
+
+# use the vi navigation keys in menu completion
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+bindkey -M viins '^[[Z' reverse-menu-complete
+bindkey -M vicmd '^[[Z' reverse-menu-complete
 
 # vi mode
 bindkey -v
@@ -86,6 +97,8 @@ zle -N zle-line-init
 preexec() {
   echo -ne '\e[5 q'
 }
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # load functions
 source ~/.config/zsh/functions/*.zsh

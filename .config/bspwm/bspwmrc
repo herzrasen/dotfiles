@@ -21,7 +21,6 @@ bspc config gapless_monocle      	    true
 bspc config focus_follows_pointer       true
 bspc config remove_disabled_monitors    true
 bspc config remove_unplugged_monitors   true
-bspc rule -a firefox desktop='^2'
 
 # use the cursor defined in .Xresources
 xsetroot -cursor_name left_ptr &
@@ -54,3 +53,8 @@ compton --config ~/.config/compton/compton.conf -b &
 killall -w dunst
 dunst &
 
+# start nm-applet if installed
+if [[ `type nm-applet` ]]; then
+  killall -w nm-applet
+  nm-applet &
+fi

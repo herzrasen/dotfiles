@@ -13,6 +13,17 @@ super + Pause
 super + @space
 	rofi -show combi
 
+# single display
+super + F1
+  xrandr --output DVI-I-2-1 --off && \
+  bspc wm -r
+
+# dual screen
+super + F2
+  xrandr --setprovideroutputsource 1 0 && \
+  xrandr --output DVI-I-2-1 --auto --right-of eDP-1 && \
+  bspc wm -r
+
 # screen brightness control
 XF86MonBrightness{Up,Down}
   brightnessctl set {+5%,5%-} && \
