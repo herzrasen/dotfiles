@@ -12,10 +12,12 @@ function secondary_monitor() {
     xrandr --query | grep -w "connected" | grep -v "primary" | cut -d ' ' -f 1
 }
 
-bspc config border_width         	1
-bspc config window_gap          	5
+bspc config border_width         	    1
+bspc config window_gap          	    5
 
-bspc config split_ratio          	    0.52
+bspc config focused_border_color      "#61AFEF"
+
+bspc config split_ratio          	    0.60
 bspc config borderless_monocle   	    true
 bspc config gapless_monocle      	    true
 bspc config focus_follows_pointer       true
@@ -41,6 +43,9 @@ elif [[ `num_monitors` -eq "2" ]]; then
 fi
 
 sxhkd &
+
+# fix for java uis
+wmname LG3D
 
 # set the wallpaper
 nitrogen --restore &

@@ -3,12 +3,7 @@
 echo "Backing up files"
 
 rsync \
-  --recursive \
-  --copy-links \
-  --perms \
-  --times \
-  --group \
-  --owner \
+  -av \
   --delete \
   --progress \
   --exclude='/.config/vivaldi' \
@@ -26,11 +21,13 @@ rsync \
   --exclude='/.xsession-errors' \
   --exclude='/.local/share/nvim' \
   --exclude='/.cargo' \
-  --exclude='/.ivy2' \
-  --exclude='/.m2' \
+  --exclude='/.ivy2/cache' \
+  --exclude='/.ivy2/local' \
+  --exclude='/.m2/repository' \
+  --exclude='/.m2/wrapper' \
   --log-file='/tmp/rsync.log' \
   /home/dennis/ \
-  dennis@keeper:backup/nightowl
+  dennis@keeper:backup/binarylab
 
 if [ $? -ne 0 ]; then
   echo "Failed backing up"

@@ -351,6 +351,11 @@ nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>ta :TestFile<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
+
+if has('nvim')
+  tmap <C-o> <C-\><C-n>
+endif
+
 " scala
 au BufRead,BufNewFile *.sbt set filetype=scala
 
