@@ -13,7 +13,7 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 RPROMPT=${return_code}
 # cd when only a path is given
-setopt autocd
+setopt autocd autopushd pushdignoredups
 
 # case insensitive globbing
 setopt no_case_glob
@@ -29,15 +29,13 @@ setopt inc_append_history
 # remove blank lines from history
 setopt hist_reduce_blanks
 
-# correction
-setopt correct
-setopt correct_all
-
 # completion
 autoload -U compinit 
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
+zstyle ':completion:*' special-dirs true
+
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
