@@ -1,4 +1,3 @@
-alias ll="lsd -Al --date='+%Y-%m-%d %H:%M'"
-alias l="lsd-l"
-alias lt="lsd --tree"
-
+alias ll="exa -alF"
+alias lll="exa -abghHliS"
+alias lt="exa --long --tree"

@@ -20,6 +20,7 @@ Plug 'cespare/vim-toml'
 Plug 'GEverding/vim-hocon'
 Plug 'janko/vim-test'
 Plug 'neomake/neomake'
+Plug 'hashivim/vim-terraform'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'rust-lang/rust.vim'
@@ -362,4 +363,7 @@ au BufRead,BufNewFile *.sbt set filetype=scala
 " mix-format
 let g:mix_format_on_save = 1
 
+" terraform
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
 

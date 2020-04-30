@@ -52,14 +52,9 @@ nitrogen --restore &
 
 # start compton
 killall -w compton
-compton --config ~/.config/compton/compton.conf -b &
+compton --config ~/.config/compton/compton.conf -b
 
 # start dunst
 killall -w dunst
 dunst &
 
-# start nm-applet if installed
-if [[ `type nm-applet` ]]; then
-  killall -w nm-applet
-  nm-applet &
-fi

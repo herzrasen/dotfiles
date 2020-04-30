@@ -98,7 +98,8 @@ preexec() {
   echo -ne '\e[5 q'
 }
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+# load env 
+source ~/.config/zsh/env/*.zsh
 
 # load functions
 source ~/.config/zsh/functions/*.zsh
@@ -107,6 +108,7 @@ source ~/.config/zsh/functions/*.zsh
 source ~/.config/zsh/aliases/*.zsh
 
 # load zsh-syntax-highlighting
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 
- [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+ [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh 
+
