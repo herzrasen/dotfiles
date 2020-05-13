@@ -15,13 +15,12 @@ super + @space
 
 # single display
 super + F1
-  xrandr --output DVI-I-2-1 --off && \
+  xrandr --output HDMI-2 --off && \
   bspc wm -r
 
 # dual screen
 super + F2
-  xrandr --setprovideroutputsource 1 0 && \
-  xrandr --output DVI-I-2-1 --auto --right-of eDP-1 && \
+  xrandr --output HDMI-2 --auto --right-of eDP-1 && \
   bspc wm -r
 
 # screen brightness control
