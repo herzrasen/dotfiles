@@ -1,6 +1,7 @@
 # enable colors
 autoload -U colors && colors
 
+EDITOR=vim
 # prompt
 NEWLINE=$'\n'
 PROMPT="%B%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$reset_color%}${NEWLINE}$%b "
@@ -34,8 +35,7 @@ autoload -U compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
-zstyle ':completion:*' special-dirs true
-
+zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
