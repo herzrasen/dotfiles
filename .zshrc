@@ -1,6 +1,7 @@
 # enable colors
 autoload -U colors && colors
 
+EDITOR=vim
 # prompt
 NEWLINE=$'\n'
 PROMPT="%B%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$reset_color%}${NEWLINE}$%b "
@@ -13,7 +14,7 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 RPROMPT=${return_code}
 # cd when only a path is given
-setopt autocd
+setopt autocd autopushd pushdignoredups
 
 # case insensitive globbing
 setopt no_case_glob
@@ -29,15 +30,12 @@ setopt inc_append_history
 # remove blank lines from history
 setopt hist_reduce_blanks
 
-# correction
-setopt correct
-setopt correct_all
-
 # completion
 autoload -U compinit 
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
+zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
@@ -98,7 +96,8 @@ preexec() {
   echo -ne '\e[5 q'
 }
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+# load env 
+source ~/.config/zsh/env/*.zsh
 
 # load functions
 source ~/.config/zsh/functions/*.zsh
@@ -107,6 +106,9 @@ source ~/.config/zsh/functions/*.zsh
 source ~/.config/zsh/aliases/*.zsh
 
 # load zsh-syntax-highlighting
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 
- [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+ [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh 
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

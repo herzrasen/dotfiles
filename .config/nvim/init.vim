@@ -20,11 +20,13 @@ Plug 'cespare/vim-toml'
 Plug 'GEverding/vim-hocon'
 Plug 'janko/vim-test'
 Plug 'neomake/neomake'
+Plug 'hashivim/vim-terraform'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'rust-lang/rust.vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'joshdick/onedark.vim'
+Plug 'rafalbromirski/vim-aurora'
 call plug#end()
 
 " set leader key
@@ -33,12 +35,15 @@ let mapleader="\<space>"
 " diable mouse
 set mouse-=a
 
+" use system clipboard
+set clipboard+=unnamedplus
+
 " how many lines of history to rememer
 set history=500
 
 " colors
 set termguicolors
-colorscheme onedark
+colorscheme aurora
 
 " enable utf-8 as default
 set encoding=utf-8
@@ -359,7 +364,16 @@ endif
 " scala
 au BufRead,BufNewFile *.sbt set filetype=scala
 
+" shell fpr .tpl
+au BufRead,BufNewFile *.tpl set filetype=sh
+
 " mix-format
 let g:mix_format_on_save = 1
 
+" terraform
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
+
+" markdown
+let g:vim_markdown_folding_disabled = 1
 
