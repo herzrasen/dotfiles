@@ -110,3 +110,5 @@ source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 
  [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh 
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

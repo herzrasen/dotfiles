@@ -31,7 +31,7 @@ xsetroot -cursor_name left_ptr &
 killall -w polybar
 if [[ `num_monitors` -eq "1" ]]; then
     primary=$(primary_monitor)
-    bspc monitor %$primary -n "$primary" -d 1 2 3 4 5 6 7 8
+    bspc monitor %$primary -n "$primary" -d 1 2 3 4 5 6 7 8 9 10
     MONITOR=$primary polybar primary &
 elif [[ `num_monitors` -eq "2" ]]; then
     primary=$(primary_monitor)
@@ -50,9 +50,9 @@ wmname LG3D
 # set the wallpaper
 nitrogen --restore &
 
-# start compton
-killall -w compton
-compton --config ~/.config/compton/compton.conf -b
+# start picom
+killall -w picom
+picom --config ~/.config/picom/picom.conf -b
 
 # start dunst
 killall -w dunst

@@ -364,6 +364,9 @@ endif
 " scala
 au BufRead,BufNewFile *.sbt set filetype=scala
 
+" shell fpr .tpl
+au BufRead,BufNewFile *.tpl set filetype=sh
+
 " mix-format
 let g:mix_format_on_save = 1
 

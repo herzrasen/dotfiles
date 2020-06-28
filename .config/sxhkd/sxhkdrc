@@ -3,8 +3,8 @@ super + Return
 	kitty
 
 # browser 
-super + shift + b
-	vivaldi vivaldi:startpage
+super + shift + f
+	firefox --new-tab about:newtab
 
 super + Pause
   betterlockscreen --lock blur
