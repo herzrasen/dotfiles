@@ -1,0 +1,51 @@
+#!/bin/sh
+
+filetype=png
+dir=~/Pictures/screenshots
+image=$dir/screenshot-$(date +%Y-%m-%dT%H:%M:%S).$filetype
+
+function prepare() {
+  mkdir -p $dir
+}
+
+function fullscreen() {
+  $(maim -u -B $image)
+  if [ "$?" -eq 0 ]; then
+    dunstify -a screenshot -p -t 5000 -u l -r 700 "Caputured fullscreen @ $image"
+  else
+    dunstify -a screenshot -p -t 5000 -u c -r 700 "Unable to capture fullscreen"
+  fi
+}
+
+function window() {
+  $(maim -u -B -i $(xdotool getactivewindow) $image) 
+  if [ "$?" -eq 0 ]; then
+    dunstify -a screenshot -p -t 5000 -u l -r 700 "Single window captured @ $image"
+  else
+    dunstify -a screenshot -p -t 5000 -u c -r 700 "Unable to capture single window"
+  fi
+}
+
+# check the number of arguments
+if [ "$#" -ne 1 ]; then
+  echo "Usage ${0} <fullscreen|window>"
+  exit -1
+fi
+
+# make command lowercase
+cmd=${1,,}
+
+case $cmd in
+  fullscreen)
+    prepare
+    fullscreen
+    ;;
+  window)
+    prepare
+    window
+    ;;
+  *)
+    echo "Don't know what to do with: $1"
+    exit -1
+esac
+
