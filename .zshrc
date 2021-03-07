@@ -47,11 +47,12 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
-bindkey -M viins '^[[Z' reverse-menu-complete
-bindkey -M vicmd '^[[Z' reverse-menu-complete
+# fix the cursor style 
+_fix_cursor() {
+   echo -ne '\e[5 q'
+}
 
-# vi mode
-bindkey -v
+precmd_functions+=(_fix_cursor)
 
 sudo-command-line() {
     [[ -z $BUFFER ]] && zle up-history
@@ -68,33 +69,6 @@ sudo-command-line() {
     fi
 }
 zle -N sudo-command-line
-# Defined shortcut keys: [Esc] [Esc]
-bindkey -M vicmd '\e\e' sudo-command-line
-bindkey -M viins '\e\e' sudo-command-line
-
-# indicate vi mode with cursor shape
-function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-    [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] ||
-    [[ ${KEYMAP} == viins ]] || 
-    [[ ${KEYMAP} = '' ]] ||
-    [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
-}
-zle -N zle-keymap-select
-# initialize the vi mode correctly
-zle-line-init() {
-  zle -K viins
-  echo -ne '\e[5 q'
-}
-zle -N zle-line-init
-
-preexec() {
-  echo -ne '\e[5 q'
-}
 
 # load env 
 source ~/.config/zsh/env/*.zsh
@@ -106,9 +80,7 @@ source ~/.config/zsh/functions/*.zsh
 source ~/.config/zsh/aliases/*.zsh
 
 # load zsh-syntax-highlighting
-source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
- [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh 
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source /usr/share/fzf/shell/key-bindings.zsh
+source .fzf/shell/key-bindings.zsh
