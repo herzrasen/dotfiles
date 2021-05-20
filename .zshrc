@@ -104,7 +104,12 @@ source ~/.config/zsh/functions/*.zsh
 
 # load aliases
 source ~/.config/zsh/aliases/*.zsh
-# load zsh-syntax-highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-source /usr/share/doc/fzf/key-bindings.zsh
+# load zsh-syntax-highlighting
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+
+source /usr/share/doc/fzf/examples/completion.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
