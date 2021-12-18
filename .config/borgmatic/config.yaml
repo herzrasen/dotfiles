@@ -1,0 +1,39 @@
+location:
+    source_directories:
+        - /home/dennis
+        - /etc
+        - /usr/local/bin
+        - /opt
+
+    repositories:
+        - borg@keeper:/volume1/borg/hypersleep
+
+    # Any paths matching these patterns are excluded from backups.
+    # Globs and tildes are expanded. See the output of "borg help
+    # patterns" for more details.
+    # exclude_patterns:
+        # - '*.pyc'
+        # - /home/*/.cache
+        # - /etc/ssl
+
+    # Exclude directories that contain a file with the given
+    # filenames. Defaults to not set.
+    # exclude_if_present:
+        # - .nobackup
+
+storage:
+    ssh_command: ssh -i /home/dennis/.ssh/id_rsa
+    encryption_passcommand: cat /home/dennis/.borgmatic-password
+
+retention:
+    # Number of daily archives to keep.
+    keep_daily: 7
+
+    # Number of weekly archives to keep.
+    keep_weekly: 4
+
+    # Number of monthly archives to keep.
+    keep_monthly: 12
+
+    # Number of yearly archives to keep.
+    keep_yearly: 1
