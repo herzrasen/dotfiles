@@ -97,13 +97,19 @@ preexec() {
 }
 
 # load env 
-source ~/.config/zsh/env/*.zsh
+for file in ~/.config/zsh/env/*.zsh; do
+    source "$file"
+done
 
 # load functions
-source ~/.config/zsh/functions/*.zsh
+for file in ~/.config/zsh/functions/*.zsh; do
+    source "$file"
+done
 
 # load aliases
-source ~/.config/zsh/aliases/*.zsh
+for file in ~/.config/zsh/aliases/*.zsh; do
+    source "$file"
+done
 
 # load zsh-syntax-highlighting
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -112,4 +118,3 @@ source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 source /usr/share/doc/fzf/examples/completion.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
